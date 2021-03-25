@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * @author Babin Sergiu
  */
@@ -34,10 +37,12 @@ public class TrackCoach implements Coach{
         return fortuneService.getFortune();
     }
 
+    @PostConstruct
     public void doMyStartupStuff() {
         System.out.println("TrackCoach: inside method doMyStartupStuff");
     }
 
+    @PreDestroy
     public void doMyCleanupStuff() {
         System.out.println("TrackCoach: inside method doMyCleanupStuff");
     }

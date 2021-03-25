@@ -18,12 +18,11 @@ public class CricketCoach implements Coach {
 
     private FortuneService fortuneService;
 
-    public CricketCoach() {
-        System.out.println("CricketCoach: inside no-arg constructor");
+    public CricketCoach(FortuneService fortuneService) {
+        this.fortuneService = fortuneService;
     }
 
-    @Autowired
-    public void setFortuneService(@Qualifier("randomFortuneService") FortuneService fortuneService) {
+    public void setFortuneService(FortuneService fortuneService) {
         this.fortuneService = fortuneService;
     }
 
