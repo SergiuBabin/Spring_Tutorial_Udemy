@@ -3,10 +3,8 @@ package md.SpringMVC.Hibernate.config;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -27,6 +25,7 @@ import java.util.logging.Logger;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 @ComponentScan("md.SpringMVC.Hibernate")
 @PropertySource({ "classpath:persistence-postgresql.properties" })
 public class DemoAppConfig implements WebMvcConfigurer {
@@ -35,11 +34,15 @@ public class DemoAppConfig implements WebMvcConfigurer {
 	private Environment env;
 	private Logger logger = Logger.getLogger(getClass().getName());
 
-	// define a bean for ViewResolver
+	@Autowired
+	private ApplicationContext applicationContext;
 
+
+	// define a bean for ViewResolver
 	@Bean
 	public SpringResourceTemplateResolver templateResolver() {
 		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+		templateResolver.setApplicationContext(applicationContext);
 		templateResolver.setPrefix("/WEB-INF/view/");
 		templateResolver.setSuffix(".html");
 		return templateResolver;
